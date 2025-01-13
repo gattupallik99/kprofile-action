@@ -1,5 +1,5 @@
 name: vprofile actions
-on: push
+on: workflow_dispatch
 env:
   AWS_REGION: us-east-2
   ECR_REPOSITORY: vprofileapp
@@ -22,7 +22,7 @@ jobs:
       - name: Set Java 11
         uses: actions/setup-java@v3
         with:
-         distribution: 'temurin' # See 'Supported distributions' for available options
+         distribution: 'temurin'
          java-version: '11'
        
   BUILD_AND_PUBLISH:   
@@ -75,9 +75,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
           cluster-name: ${{ env.EKS_CLUSTER }}
-          #config-files: .github/values/dev.yaml
           chart-path: helm/vprofilecharts
           namespace: default
           values: appimage=${{ secrets.REGISTRY }}/${{ env.ECR_REPOSITORY }},apptag=${{ github.run_number }}
           name: vprofile-stack
-##
