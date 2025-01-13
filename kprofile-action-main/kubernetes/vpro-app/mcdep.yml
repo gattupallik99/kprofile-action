@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vpromc
+  name: kpromc
   labels:
-    app: vpromc
+    app: kpromc
 spec:
   selector:
     matchLabels:
-      app: vpromc
+      app: kpromc
   replicas: 1
   template:
     metadata:
       labels:
-        app: vpromc
+        app: kpromc
     spec:
       containers:
-      - name: vpromc
+      - name: kpromc
         image: memcached
         ports:
-        - name: vpromc-port
+        - name: kpromc-port
           containerPort: 11211

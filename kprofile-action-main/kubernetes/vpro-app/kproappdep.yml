@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kproapp
+  labels: 
+    app: kproapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kproapp
+  template:
+    metadata:
+      labels:
+        app: kproapp
+    spec:
+      containers:
+      - name: kproapp
+        image: kprofile/kprofileapp
+        ports:
+        - name: kproapp-port
+          containerPort: 8080
+      initContainers:
+      - name: init-mydb
+        image: busybox
+        command: ['sh', '-c', 'until nslookup kprodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
+      - name: init-memcache
+        image: busybox
+        command: ['sh', '-c', 'until nslookup kprocache01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
