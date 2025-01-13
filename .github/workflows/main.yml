@@ -12,7 +12,10 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4
 
-      - name: List files for debugging
+      - name: print current dir
+        run:  pwd
+        
+      - name: list files
         run: ls -l  
 
       - name: Maven test
