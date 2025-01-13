@@ -12,6 +12,9 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4
 
+      - name: List files for debugging
+        run: ls -l  
+
       - name: Maven test
         run: mvn test
 
